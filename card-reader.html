@@ -1,0 +1,163 @@
+<head>
+    <title>Farpoint Volunteer Tracker</title>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-title" content="Farpoint">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+    {{> loginButtons}}
+    {{#if currentUser}}
+    {{> main}}
+    {{/if}}
+</body>
+<template name="main">
+    <div id="wrapper">
+        {{> dynamicTemplate}}
+    </div>
+</template>
+<template name="cardSwiper">
+    <div id="cardSwiper">
+        <div class="row-fluid">
+            <div class="form-group">
+                <label for="cardinput">Please Swipe Card or Enter Card Number</label>
+                <input type="text" class="form-control" id="cardinput" placeholder="Swipe Card">
+                <button type="button" id="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="cardData">
+    <div id="cardSwiper">
+        <div class="row-fluid">
+            <div class="col-xs-3">
+                <h4>Quick Points</h4>
+                <div class="form-group">
+                    <button type="button" id="short-private" class="btn btn-block btn-info">Private</button>
+                    <button type="button" id="long-private" class="btn btn-block btn-primary">5 Hour</button>
+                </div>
+                <div class="input-group form-group">
+                      <input type="text" id="customValue" class="form-control">
+                      <span class="input-group-btn">
+                            <button class="btn btn-default" id="addCustom" type="button">Add</button>
+                      </span>
+                </div><!-- /input-group -->
+            </div>
+            <div class="col-xs-5">
+                {{> info}}
+            </div>
+
+            <div class="col-xs-3 col-xs-offset-1">
+                {{> passes}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="dynamicTemplate">
+    {{#with chooseTemplate name}}
+    {{> template}}
+    {{/with}}
+</template>
+<template name="info">
+    <h4>Info</h4>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        {{#unless volunteerName}}
+        <input type="text" class="form-control" id="name" placeholder="Name">
+        {{else}}
+        <div class="name">{{volunteerName}}</div>
+        {{/unless}}
+    </div>
+    <div class="form-group">
+        <label for="birthday">Birthday:</label>
+        {{#unless volunteerBirthday}}
+        <div class="input-group datetimepicker">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            <input class="set-due-date form-control" id="birthday" type="text"/>
+        </div>
+        {{else}}
+        <div class="birthday">{{volunteerBirthday}}</div>
+        {{/unless}}
+    </div>
+    <div class="form-group">
+        <label for="began">Began Volunteering:</label>
+        {{#unless volunteerBegan}}
+        <div class="input-group datetimepicker">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            <input class="set-due-date form-control" id="began" value="{{volunteerBegan}}" type="text"/>
+        </div>
+        {{else}}
+        <div class="began">{{volunteerBegan}}</div>
+        {{/unless}}
+    </div>
+    <div class="form-group">
+        <label for="points">Points:</label>
+        <input type="text" class="form-control" id="points" placeholder="Points" value="{{volunteerPoints}}">
+    </div>
+    <div class="form-group">
+        <label for="points">Votes:</label>
+        <input type="text" class="form-control" id="votes" placeholder="Votes" value="{{volunteerVotes}}">
+    </div>
+    <div class="form-group">
+        <button type="button" id="close" class="btn btn-warning">Close</button>
+        <button type="button" id="save" class="btn btn-default">Save</button>
+    </div>
+</template>
+
+<template name="passes">
+    <h4>Passes</h4>
+    <form class="form-horizontal" role="form">
+        <div class="form-group form-horizontal">
+            <label class="control-label">Magellan</label>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='magBridge' checked="{{hasPass "magBridge"}}" value="">
+                Bridge
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='magComp' checked="{{hasPass "magComp"}}" value="">
+                2nd Chair
+                </label>
+            </div>
+            <label class="control-label">Phoenix</label>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='phoDoc' checked="{{hasPass "phoDoc"}}" value="">
+                Doctor
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='phoComp' checked="{{hasPass "phoComp"}}" value="">
+                2nd Chair
+                </label>
+            </div>
+            <label class="control-label">Odyssey</label>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='odyDoc' checked="{{hasPass "odyDoc"}}" value="">
+                Doctor
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='odyComp' checked="{{hasPass "odyComp"}}" value="">
+                2nd Chair
+                </label>
+            </div>
+            <label class="control-label">Galileo</label>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" id='galPass' checked="{{hasPass "galPass"}}" value="">
+                Pass
+                </label>
+            </div>
+        </div>
+    </form>
+</template>
